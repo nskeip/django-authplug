@@ -15,5 +15,5 @@ class PluggableAuthMiddleware(object):
         del params['code']
 
         user = authenticate(code=code, params=params, signature=signature)
-
-        return
+        if user:
+            request.user = user
