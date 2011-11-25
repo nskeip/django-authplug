@@ -18,7 +18,7 @@ def create_randstring_maker(count):
 class HashKey(models.Model):
     user = models.OneToOneField(User)
     code = models.SlugField(unique=True)
-    key = models.CharField(max_length=20, unique=True, default=create_randstring_maker(20))
+    salt = models.CharField(max_length=20, unique=True, default=create_randstring_maker(20))
 
     @staticmethod
     def datetime2str(dt):
@@ -46,6 +46,10 @@ class HashKey(models.Model):
 
         utc_dates = [HashKey.datetime2str(datetime.utcnow() + timedelta(hours=a)) for a in xrange(-1, 2)]
         return [HashKey.sign(params, salt, dt) for dt in utc_dates]
+
+    def signature_ok(self, params, signature):
+        sr = self.signs_range(params, self.salt)
+        return signature in sr
 
     def __unicode__(self):
         return u'%s (partner)' % self.code
