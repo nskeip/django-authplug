@@ -96,9 +96,15 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
+    'authplug.middleware.PluggableAuthMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
+
+
+AUTHENTICATION_BACKENDS = (
+    'sms.smsgate.auth.backends.PartnerTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',)
 
 ROOT_URLCONF = 'authplughost.urls'
 
