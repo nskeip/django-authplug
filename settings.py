@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
 
 
 AUTHENTICATION_BACKENDS = (
-    'sms.smsgate.auth.backends.PartnerTokenBackend',
+    'authplug.backends.PluggableAuthBackend',
     'django.contrib.auth.backends.ModelBackend',)
 
 ROOT_URLCONF = 'authplughost.urls'
