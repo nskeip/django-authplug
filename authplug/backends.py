@@ -5,14 +5,14 @@ class PluggableAuthBackend:
     supports_anonymous_user = False
     supports_object_permissions = False
 
-    def authenticate(self, code, params, signature):
+    def authenticate(self, code=None, params=None, signature=None):
         if not code or not signature:
             return
         try:
             hk = HashKey.objects.get(code=code)
             if hk.signature_ok(params, signature):
                 return hk.user
-        except HashKey.DoesNotExist:
+        except (HashKey.DoesNotExist,):
             return
 
     def get_user(self, user_id):

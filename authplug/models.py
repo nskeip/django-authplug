@@ -48,8 +48,10 @@ class HashKey(models.Model):
         return [HashKey.sign(params, salt, dt) for dt in utc_dates]
 
     def signature_ok(self, params, signature):
-        sr = self.signs_range(params, self.salt)
-        return signature in sr
+        try:
+            return signature in self.signs_range(params, self.salt)
+        except TypeError:
+            return False
 
     def __unicode__(self):
         return u'%s (partner)' % self.code
