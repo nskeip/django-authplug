@@ -6,3 +6,4 @@ settings_local.py
 .project
 .pydevproject
 *.db
+build/
