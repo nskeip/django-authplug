@@ -1,4 +1,4 @@
-from copy import copy
+from copy import deepcopy
 from django.contrib.auth import authenticate
 
 class PluggableAuthMiddleware(object):
@@ -9,7 +9,7 @@ class PluggableAuthMiddleware(object):
         signature = request.REQUEST['sign']
         code = request.REQUEST['code']
 
-        params = copy(request.REQUEST)
+        params = dict(request.REQUEST) # to copy, not have a link
 
         del params['sign']
         del params['code']
