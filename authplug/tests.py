@@ -15,6 +15,10 @@ class AuthPlugTestCase(unittest.TestCase):
         self.salt = 'SALT'
         self.hk = HashKey.objects.create(user=self.good_user, code=self.code, salt=self.salt)
         self.params = {'param1' : 'value1', 'param2': 'value2'}
+        self.factory = RequestFactory()
+
+    def fake_view(self, request):
+        return getattr(request, 'user', None)
 
     def tearDown(self):
         User.objects.all().delete()
@@ -32,14 +36,12 @@ class AuthPlugTestCase(unittest.TestCase):
         params_copy = deepcopy(self.params)
 
         # middleware testing...
-        fake_view = lambda request: getattr(request, 'user', None)
-        rf = RequestFactory()
-        request = rf.get('/some/private/view/', data=self.params)
+        request = self.factory.get('/some/private/view/', data=self.params)
 
         plug_mw = PluggableAuthMiddleware()
         plug_mw.process_request(request=request)
 
-        user_as_response = fake_view(request)
+        user_as_response = self.fake_view(request)
 
         self.assertFalse(user_as_response is None, msg='fake_view returned None instead of good_user')
 
@@ -47,3 +49,17 @@ class AuthPlugTestCase(unittest.TestCase):
 
         # params were not hurt...
         self.assertEqual(params_copy, self.params, msg='params were likely hurt in the middleware')
+
+    def test_bad_user_attempt(self):
+        signature = sign(self.params, 'BAD SALT')
+        self.params['code'] = self.code
+        self.params['sign'] = signature
+
+        # middleware testing...
+        request = self.factory.get('/some/private/view/', data=self.params)
+
+        plug_mw = PluggableAuthMiddleware()
+        plug_mw.process_request(request=request)
+
+        user_as_response = self.fake_view(request)
+        self.assertTrue(user_as_response is None) # no user is in request
