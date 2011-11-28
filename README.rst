@@ -2,14 +2,14 @@
 Authplug - pluggable django authentication tool
 ===============================================
 
-_
 -----------
 Description
 -----------
 
- A django application (actualy, a middleware and a backend) that allows us:
-     * to sign our requests and to be authenticated with the signature and some other thing ;)
-     * not to be responsible for storing the state on client
+A django application (actualy, a middleware and a backend) that allows us:
+
+* to sign our requests and to be authenticated with the signature and some other thing ;)
+* not to be responsible for storing the state on client
 
 Requirements
 ------------
@@ -19,11 +19,11 @@ Requirements
 Installation on server
 ----------------------
 
- 1. ``pip install -e git+http://github.com/nskeip/authplug/#egg=authplug``
+1. ``pip install -e git+http://github.com/nskeip/authplug/#egg=authplug``
 
- 2. Put ``authplug.middleware.PluggableAuthMiddleware`` to your ``MIDDLEWARE_CLASSES``.
+2. Put ``authplug.middleware.PluggableAuthMiddleware`` to your ``MIDDLEWARE_CLASSES``.
 
- 3. Disable ``django.middleware.csrf.CsrfViewMiddleware``.
+3. Disable ``django.middleware.csrf.CsrfViewMiddleware``.
     Your ``MIDDLEWARE_CLASSES`` might look like this:
     ::
 
@@ -36,17 +36,16 @@ Installation on server
             'django.contrib.messages.middleware.MessageMiddleware',
         )
 
- 4. Put ``authplug.backends.PluggableAuthBackend`` to your ``AUTHENTICATION_BACKENDS``.
+4. Put ``authplug.backends.PluggableAuthBackend`` to your ``AUTHENTICATION_BACKENDS``.
 
-    If there is no ``AUTHENTICATION_BACKENDS`` variable in your ``settings.py``,
-    you can create it (maybe you will need to add ``django.contrib.auth.backends.ModelBackend``).
-
-    Your ``AUTHENTICATION_BACKENDS`` might look like this:
-    ::
+   If there is no ``AUTHENTICATION_BACKENDS`` variable in your ``settings.py``,
+   you can create it (maybe you will need to add ``django.contrib.auth.backends.ModelBackend``).
+   Your ``AUTHENTICATION_BACKENDS`` might look like this:
+   ::
 
         AUTHENTICATION_BACKENDS = (
-             'authplug.backends.PluggableAuthBackend',
-             'django.contrib.auth.backends.ModelBackend',)
+            'authplug.backends.PluggableAuthBackend',
+            'django.contrib.auth.backends.ModelBackend',)
 
 Installation on client
 ----------------------
