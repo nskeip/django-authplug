@@ -1,4 +1,3 @@
-from copy import deepcopy
 from django.contrib.auth import authenticate
 
 class PluggableAuthMiddleware(object):
