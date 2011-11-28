@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name='authplug',
+    name='django-authplug',
     version='0.1',
     description='Authplug - pluggable auth',
     long_description='An authentication application for django',
