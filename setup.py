@@ -9,5 +9,6 @@ setup(
     author_email='me@ns-keip.ru',
     url='https://github.com/nskeip/authplug',
     packages=['authplug'],
-    requires=['django']
+    requires=['django'],
+    license='bsd'
 )
