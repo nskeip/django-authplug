@@ -19,7 +19,7 @@ Requirements
 Installation on server
 ----------------------
 
-1. ``pip install -e git+http://github.com/nskeip/django-authplug/#egg=authplug``
+1. ``pip install -e git+http://github.com/nskeip/django-authplug/#egg=django-authplug``
 
 2. Put ``authplug.middleware.PluggableAuthMiddleware`` to your ``MIDDLEWARE_CLASSES``.
 
@@ -51,7 +51,7 @@ Installation on client
 ----------------------
 
 Simply run:
-    ``pip install -e git+http://github.com/nskeip/django-authplug/#egg=authplug``
+    ``pip install -e git+http://github.com/nskeip/django-authplug/#egg=django-authplug``
 
 Now you can try to ``import authplug`` in python console.
 
