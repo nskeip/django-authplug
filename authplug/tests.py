@@ -17,9 +17,6 @@ class AuthPlugTestCase(unittest.TestCase):
         User.objects.all().delete()
         HashKey.objects.all().delete()
 
-    def test_good_man_with_client(self):
+    def test_good_man_params_signature_ok(self):
         signature = sign(self.params, self.salt)
         self.assertTrue(self.hk.signature_ok(self.params, signature))
-
-        self.params['code'] = self.code
-        self.params['sign'] = signature
