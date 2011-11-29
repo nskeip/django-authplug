@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 import string
 import random
-import hashlib
 from datetime import datetime, timedelta
 from django.db import models
 from django.contrib.auth.models import User
+import client
 
 
 def create_randstring_maker(count):
@@ -21,22 +21,8 @@ class HashKey(models.Model):
     salt = models.CharField(max_length=20, unique=True, default=create_randstring_maker(20))
 
     @staticmethod
-    def datetime2str(dt):
-        return '%s%s%s%s' % (dt.year, dt.month, dt.day, dt.hour,)
-
-    @staticmethod
     def sign(params, salt, date=None):
-        items = sorted(params.iteritems())
-        hash = u'&'.join([u'='.join((unicode(k), unicode(v))) for k, v in items])
-        date = date or HashKey.datetime2str(datetime.utcnow())
-
-        #прибаляем дату в формате UTC2 и применяем sha1
-        s1 = u''.join((hash, date))
-        hash = hashlib.sha1(s1).hexdigest()
-        #добавляем ключ и применяем sha1
-        hash = hashlib.sha1(u''.join((hash, salt))).hexdigest()
-
-        return unicode(hash)
+        return client(params, salt, date)
 
     @staticmethod
     def signs_range(params, salt):
@@ -44,7 +30,7 @@ class HashKey(models.Model):
             or not isinstance(salt, basestring):
             raise TypeError()
 
-        utc_dates = [HashKey.datetime2str(datetime.utcnow() + timedelta(hours=a)) for a in xrange(-1, 2)]
+        utc_dates = [client.datetime2str(datetime.utcnow() + timedelta(hours=a)) for a in xrange(-1, 2)]
         return [HashKey.sign(params, salt, dt) for dt in utc_dates]
 
     def signature_ok(self, params, signature):
