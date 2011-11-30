@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import hashlib
 
 def datetime2str(dt):
