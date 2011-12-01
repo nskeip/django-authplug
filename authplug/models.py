@@ -26,10 +26,6 @@ class HashKey(models.Model):
 
     @staticmethod
     def signs_range(params, salt):
-        if not isinstance(params, dict) \
-            or not isinstance(salt, basestring):
-            raise TypeError()
-
         utc_dates = [client.datetime2str(datetime.utcnow() + timedelta(hours=a)) for a in xrange(-1, 2)]
         return [HashKey.sign(params, salt, dt) for dt in utc_dates]
 
