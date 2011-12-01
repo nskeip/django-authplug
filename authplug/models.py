@@ -26,7 +26,7 @@ class HashKey(models.Model):
 
     @staticmethod
     def signs_range(params, salt):
-        utc_dates = [client.datetime2str(datetime.utcnow() + timedelta(hours=a)) for a in xrange(-1, 2)]
+        utc_dates = [client.datetime_ymdh_str(datetime.utcnow() + timedelta(hours=a)) for a in xrange(-1, 2)]
         return [HashKey.sign(params, salt, dt) for dt in utc_dates]
 
     def signature_ok(self, params, signature):
