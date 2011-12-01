@@ -22,7 +22,7 @@ class HashKey(models.Model):
 
     @staticmethod
     def sign(params, salt, date=None):
-        return client(params, salt, date)
+        return client.sign(params, salt, date)
 
     @staticmethod
     def signs_range(params, salt):
