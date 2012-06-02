@@ -7,7 +7,7 @@ setup(
     long_description='An authentication application for django',
     author='nskeip',
     author_email='me@ns-keip.ru',
-    url='https://github.com/mediasite/authplug',
+    url='https://github.com/nskeip/authplug',
     packages=['authplug'],
     requires=['django'],
     license='bsd'
